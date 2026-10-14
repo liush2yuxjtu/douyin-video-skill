@@ -86,6 +86,15 @@ if command -v shellcheck >/dev/null 2>&1; then
   if shellcheck -S warning $scripts; then ok "shellcheck"; else ko "shellcheck"; fi
 else sk "shellcheck not installed"; fi
 
+echo "== voiceover verifier"
+if python3 -m py_compile skills/verify-skill/verify_voiceover.py; then ok "py_compile verify_voiceover.py"; else ko "py_compile verify_voiceover.py"; fi
+if [ -n "${VO_DIR:-}" ]; then
+  if python3 -c "import faster_whisper, numpy" 2>/dev/null && command -v ffmpeg >/dev/null 2>&1; then
+    if python3 skills/verify-skill/verify_voiceover.py --full "$VO_DIR/vo_full.wav" --clips "$VO_DIR/final" \
+         --lines "$VO_DIR/lines.txt" --ref "$VO_DIR/ref_real.wav" ${VO_NOUNS:+--nouns "$VO_NOUNS"}; then ok "voiceover $VO_DIR"; else ko "voiceover $VO_DIR"; fi
+  else sk "voiceover: faster-whisper/ffmpeg missing"; fi
+else sk "voiceover: VO_DIR not set"; fi
+
 echo
 echo "passed=$pass failed=$fail skipped=$skip"
 [ "$fail" -eq 0 ]
