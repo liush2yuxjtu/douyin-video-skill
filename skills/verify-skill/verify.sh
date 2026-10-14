@@ -59,7 +59,7 @@ if [ -f ATTRIBUTION.md ]; then
     if grep -q "$k" ATTRIBUTION.md; then ok "ATTRIBUTION.md mentions $k"; else ko "ATTRIBUTION.md missing $k"; fi
   done
 else
-  if grep -rlq 'references/transcript' skills 2>/dev/null; then ko "third-party transcript present but no ATTRIBUTION.md"; else sk "no third-party content, ATTRIBUTION.md not required"; fi
+  if ls skills/*/references/* >/dev/null 2>&1; then ko "third-party transcript present but no ATTRIBUTION.md"; else sk "no third-party content, ATTRIBUTION.md not required"; fi
 fi
 
 echo "== markdown links (relative targets exist)"
