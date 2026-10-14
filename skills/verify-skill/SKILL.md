@@ -36,3 +36,11 @@ TP_KEY=<key> node verify/verify.mjs        # 可选 BASE=<预览地址>；默认
 Headless Chromium with `--use-fake-device-for-media-stream`, mobile (Pixel 7) + desktop (1440×900) viewports, for every script in `public/scripts/index.json`:
 标签数量与切换、顶部新手说明、逐句字幕（`#cur` 与 `n / 总数`）、录制约 7s → 等「已自动上传」→ `GET /api/recordings?session=` 为 `complete`、`script` 字段正确、分片 ≥1、`markers.json` 的 `script.id` 正确；
 最后只 `DELETE` 本次测试创建的会话（绝不删除真实录音）。通过标准：输出 `RESULT: ALL PASS`、退出码 0。改提词站后必须对生产地址跑通再报告完成。
+
+### 手机文字显示检查 / Mobile text-display checks
+`verify/verify.mjs` 先跑这部分（`TEXT_ONLY=1` 只跑它，不上传）：iPhone SE 375×667、iPhone 14 390×844、Pixel 7 412×915、小屏安卓 360×740 × 竖屏/横屏 × 空闲/录制中布局 × 每个脚本的每一句：
+- 无横向溢出：`scrollWidth <= clientWidth`
+- 字幕 `#cur` 完整在视口内，且文字区域 `elementFromPoint` 命中的是字幕自身（没被按钮/控制栏遮挡）
+- 字号在 16–72px；字幕框不裁切：`scrollHeight <= clientHeight`
+- 中文非豆腐块：canvas `measureText` 宽度与缺字字形对比（box 上需装 Noto Sans CJK，避免误报）
+- 截图存 `verify/artifacts/`（`ART=` 可改）。用户反馈“手机上字显示不对”时，先跑这部分确认能复现（应 FAIL），修完再跑到 ALL PASS。
