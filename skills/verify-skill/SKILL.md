@@ -69,6 +69,15 @@ Checks / 检查项 (PASS / WARN / FAIL table, exit 1 on any FAIL):
 5. **Level** — true peak ≤ −1 dBFS, integrated −14 ± 1.5 LUFS; a raw clip at 0 dBFS is a WARN (source take may be clipped, prefer regenerating).
    真峰值 ≤ −1 dBFS，响度 −14±1.5 LUFS；单句原始峰值 0 dBFS 给 WARN。
 
+6. **Prosody (phrasing + intonation)** — needs `jieba` (else WARN-skip; `--no-prosody` to turn off). Full-file word timestamps are aligned to the script; each energy pause (≥0.08s, −30 dB) is snapped (±1 char, ASR jitter) to a script boundary: sentence end / comma / jieba word boundary / inside a word.
+   韵律（断句 + 语调）：需要 `jieba`。把每个停顿对齐到台词边界：句末 / 逗号 / 词边界 / 词内。
+   - **FAIL run-on**: fewer than 30% of commas get a pause (`--min-comma-pause`) — sounds breathless/odd. 逗号处几乎不停顿 = 一口气念完，听感断句怪。
+   - **FAIL mid-phrase break**: any pause ≥0.15s not at punctuation (`--max-midphrase`), e.g. `可能是|三个月前`. 非标点处停顿 ≥0.15s。
+   - **FAIL inverted hierarchy**: a non-sentence-end pause ≥0.9× the mean sentence-end pause (comma pauses must be clearly shorter than full stops). 逗号停顿不应接近句末停顿。
+   - **WARN flat intonation**: mean per-sentence f0 range < 7 semitones (`--min-f0-range`); phrase-final moves are printed (clear falls ≈ assertive/"good tone"). 每句音高范围 <7 半音给 WARN。
+   Calibrated on a human listening test (3 style samples): run-on A and mid-phrase-break B were judged 「断句太奇怪」, C 「连贯」; B (13 st range, −3.5 st final falls) 「语气语调好」. The metrics reproduce all three. Root cause there was the TTS take itself (raw takes already had 0/9 comma pauses, or 1.2 s mid-sentence gaps and `可能是|三个月前`); silence-shortening only acts on <−32 dB gaps, so it cannot splice voiced audio, but it flattens pause contrast — re-take bad sentences instead of over-trimming.
+   以 3 个风格样本的人工听感校准：A（一口气）和 B（词中断）被评「断句怪」，C「连贯」，B「语气语调好」，指标全部复现。根因是 TTS 原始 take，而非剪静音/变速；坏句应重生成。
+
 ### Clone reference rule / 克隆参考音规则
 - Use **20–30 s of natural, continuous speech** from the real speaker, same phone/room, normal pace. Record it with the teleprompter scripts `chat20` (casual chat) and `voice-sample` (clean read); trim only leading/trailing silence, light normalization, no EQ/reverb.
   用真人 **20–30 秒自然连续说话**（同一手机、同一房间、正常语速），用提词器脚本 `chat20` / `voice-sample` 录制；只裁首尾静音、轻度归一化，不加 EQ/混响。
