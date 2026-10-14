@@ -1,0 +1,13 @@
+{
+  "name": "douyin-video-skill",
+  "description": "Agent Skills distilled from Douyin (抖音) creator videos",
+  "owner": { "name": "liush2yuxjtu" },
+  "plugins": [
+    {
+      "name": "douyin-video-skill",
+      "source": "./",
+      "description": "viral-topic-picking: pick and score short-video topics with the 'four brain questions' method (爆款选题)",
+      "version": "0.1.0"
+    }
+  ]
+}

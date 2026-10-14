@@ -40,6 +40,8 @@ With the open-source [`skills`](https://github.com/vercel-labs/skills) CLI, whic
 npx skills add liush2yuxjtu/douyin-video-skill --skill viral-topic-picking -g -y
 ```
 
+Or as a Claude Code plugin: `/plugin marketplace add liush2yuxjtu/douyin-video-skill` then `/plugin install douyin-video-skill@douyin-video-skill`.
+
 Or copy it by hand into Claude Code ([official docs](https://code.claude.com/docs/en/skills)):
 
 ```bash
@@ -78,11 +80,16 @@ skills/
   viral-topic-picking/
     SKILL.md                    # the method and step-by-step instructions
     references/transcript.md    # full timestamped transcript of the source video
+  verify-skill/                 # local checks (no CI): bash skills/verify-skill/verify.sh
+.claude-plugin/                 # Claude Code plugin marketplace manifest
+ATTRIBUTION.md                  # source & copyright notice
 LICENSE
 README.md / README_zh.md
 ```
 
 ## Source and credit
+
+> **Attribution:** `viral-topic-picking` quotes the full subtitles of 《给我两秒就好》 by Douyin creator **@人类最强编导** ([video](https://www.douyin.com/video/7690907639698132081)) for learning and reference only. Copyright belongs to the original author. See [ATTRIBUTION.md](ATTRIBUTION.md); removal requests via [issues](https://github.com/liush2yuxjtu/douyin-video-skill/issues).
 
 The method belongs to its creator, 抖音 @人类最强编导. The video had no official subtitles, so the transcript was made with `faster-whisper` (`medium`) and may contain a few recognition errors, which are noted at the top of `transcript.md`. This repo is an unofficial study note and is **not affiliated with Douyin, ByteDance or the creator**. If you are the creator and want anything changed or removed, please open an [issue](https://github.com/liush2yuxjtu/douyin-video-skill/issues).
 
@@ -90,7 +97,7 @@ The method belongs to its creator, 抖音 @人类最强编导. The video had no 
 
 - [ ] More skills distilled from other Douyin creator videos (hooks, scripts, editing rhythm)
 - [ ] A worked example for each skill with real input and output
-- [ ] Bring back a Douyin video reader skill (caption, author, engagement, chapters) to feed new videos into this pipeline
+- [x] Douyin video reader skill now lives in its own repo: [douyin-read-skill](https://github.com/liush2yuxjtu/douyin-read-skill)
 
 ## Contributing
 

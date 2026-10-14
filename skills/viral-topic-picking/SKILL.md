@@ -5,6 +5,8 @@ description: 用“脑科学四问”给短视频（抖音、小红书、视频�
 
 # Viral Topic Picking（爆款选题）
 
+> **出处 / Attribution：** 本 skill 基于抖音 @人类最强编导《给我两秒就好》（https://www.douyin.com/video/7690907639698132081）的完整字幕整理，仅供学习参考，版权归原作者所有，如需删除请提 issue。详见 [ATTRIBUTION.md](../../ATTRIBUTION.md)。
+
 选题决定一条视频的流量上限。选题的使命是抢注意力：让用户的大脑优先处理你的信息，拿到完播和停留。
 
 ## 核心规则：用户刷到视频时，大脑先做四个判断
