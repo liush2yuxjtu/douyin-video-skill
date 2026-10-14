@@ -24,3 +24,15 @@ Needs `bash`, `python3`; `shellcheck` is used if installed, otherwise skipped. E
 
 When adding a skill from a new video, also add its source to `ATTRIBUTION.md`.
 新增来自其他视频的 skill 时，请同步在 `ATTRIBUTION.md` 中补充出处。
+
+## A-roll 提词录制器端到端验证 / Teleprompter E2E verify
+Repo: https://github.com/liush2yuxjtu/aroll-teleprompter · Site: https://aroll-teleprompter.vercel.app/?k=<TP_KEY>&script=<id>（`koubo` / `chat20` / `voice-sample`）
+
+```bash
+git clone https://github.com/liush2yuxjtu/aroll-teleprompter && cd aroll-teleprompter
+npm ci && npx playwright install chromium
+TP_KEY=<key> node verify/verify.mjs        # 可选 BASE=<预览地址>；默认生产地址
+```
+Headless Chromium with `--use-fake-device-for-media-stream`, mobile (Pixel 7) + desktop (1440×900) viewports, for every script in `public/scripts/index.json`:
+标签数量与切换、顶部新手说明、逐句字幕（`#cur` 与 `n / 总数`）、录制约 7s → 等「已自动上传」→ `GET /api/recordings?session=` 为 `complete`、`script` 字段正确、分片 ≥1、`markers.json` 的 `script.id` 正确；
+最后只 `DELETE` 本次测试创建的会话（绝不删除真实录音）。通过标准：输出 `RESULT: ALL PASS`、退出码 0。改提词站后必须对生产地址跑通再报告完成。
