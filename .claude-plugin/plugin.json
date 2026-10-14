@@ -1,0 +1,8 @@
+{
+  "name": "douyin-video-skill",
+  "description": "Agent Skills distilled from Douyin (抖音) creator videos: viral-topic-picking (爆款选题)",
+  "version": "0.1.0",
+  "author": { "name": "liush2yuxjtu" },
+  "repository": "https://github.com/liush2yuxjtu/douyin-video-skill",
+  "license": "MIT"
+}

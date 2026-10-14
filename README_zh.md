@@ -50,6 +50,10 @@ cp -r douyin-video-skill/skills/viral-topic-picking ~/.claude/skills/
 
 skill 遵循开放的 [Agent Skills](https://agentskills.io) 格式（`SKILL.md` 带 `name` 和 `description` frontmatter），支持这个格式的 agent 都能加载。
 
+也可作为 Claude Code 插件安装：`/plugin marketplace add liush2yuxjtu/douyin-video-skill`，再 `/plugin install douyin-video-skill@douyin-video-skill`。
+
+本地校验（无 CI）：`bash skills/verify-skill/verify.sh`。
+
 ## 使用
 
 直接用自然语言问 agent，例如：
@@ -78,11 +82,16 @@ skills/
   viral-topic-picking/
     SKILL.md                    # 方法和执行步骤
     references/transcript.md    # 来源视频带时间戳的全文字幕
+  verify-skill/                 # 本地校验（无 CI）：bash skills/verify-skill/verify.sh
+.claude-plugin/                 # Claude Code 插件市场清单
+ATTRIBUTION.md                  # 出处与版权声明
 LICENSE
 README.md / README_zh.md
 ```
 
 ## 来源与致谢
+
+> **引用声明：** `viral-topic-picking` 引用了抖音 **@人类最强编导**《给我两秒就好》（[视频](https://www.douyin.com/video/7690907639698132081)）的完整字幕，仅供学习与参考，版权归原作者所有。详见 [ATTRIBUTION.md](ATTRIBUTION.md)；如需删除请提 [issue](https://github.com/liush2yuxjtu/douyin-video-skill/issues)。
 
 方法归原作者抖音 @人类最强编导 所有。视频没有官方字幕，字幕用 `faster-whisper`（`medium`）转写，可能有少量识别错误，已在 `transcript.md` 开头注明。本仓库是非官方的学习笔记，**与抖音、字节跳动及原作者无关**。如果你是原作者，希望修改或删除任何内容，请提 [issue](https://github.com/liush2yuxjtu/douyin-video-skill/issues)。
 
@@ -90,7 +99,7 @@ README.md / README_zh.md
 
 - [ ] 从更多抖音干货视频整理新 skill（开头钩子、脚本结构、剪辑节奏）
 - [ ] 每个 skill 配一个真实输入输出的完整示例
-- [ ] 重新加入抖音视频读取 skill（文案、作者、互动数据、章节），把新视频接进这条流程
+- [x] 抖音视频读取 skill 已独立成仓库：[douyin-read-skill](https://github.com/liush2yuxjtu/douyin-read-skill)
 
 ## 贡献
 
