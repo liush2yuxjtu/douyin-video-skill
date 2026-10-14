@@ -37,6 +37,9 @@ Headless Chromium with `--use-fake-device-for-media-stream`, mobile (Pixel 7) + 
 标签数量与切换、顶部新手说明、逐句字幕（`#cur` 与 `n / 总数`）、录制约 7s → 等「已自动上传」→ `GET /api/recordings?session=` 为 `complete`、`script` 字段正确、分片 ≥1、`markers.json` 的 `script.id` 正确；
 最后只 `DELETE` 本次测试创建的会话（绝不删除真实录音）。通过标准：输出 `RESULT: ALL PASS`、退出码 0。改提词站后必须对生产地址跑通再报告完成。
 
+Deploy note: the site is not Git-connected — deploy via Vercel MCP `upload_file` + `create_deployment` (`target: production`). **Vercel MCP: omit teamId (403 bug)** — passing `teamId`/`slug` returns 403 forbidden; omit them. Voice comparison page: `/voices/?k=<TP_KEY>`, read the pick via `GET /api/choice?k=<TP_KEY>` (`.latest.choice`).
+部署说明：站点未连 Git，用 Vercel MCP 上传文件后 `create_deployment`；**不要传 teamId/slug（会 403）**。
+
 ### 手机文字显示检查 / Mobile text-display checks
 `verify/verify.mjs` 先跑这部分（`TEXT_ONLY=1` 只跑它，不上传）：iPhone SE 375×667、iPhone 14 390×844、Pixel 7 412×915、小屏安卓 360×740 × 竖屏/横屏 × 空闲/录制中布局 × 每个脚本的每一句：
 - 无横向溢出：`scrollWidth <= clientWidth`
